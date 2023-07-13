@@ -8,7 +8,7 @@ $$\vdots$$
 $$x \equiv a_k \pmod{n_k}$$
 and $n_1, n_2, \dots, n_k \in \mathbb{N_0}$ are either pairwise coprimes or all equal to $0$.
 
-In this program, a system of congruences is represented as an OCaml list of `(modulus, remainder)` pair of integers.
+In this program, a system of congruences is represented as an OCaml list of `(modulus, remainder)` pairs of integers.
 
 If $\forall n \in \lbrace  n_1, n_2, \dots, n_k \rbrace $, $n = 0$, we return $lcm ( n_1,n_2,\dots, n_{k-1}, n_k )$ as the general solution, and $0$ as the smallest.
 
