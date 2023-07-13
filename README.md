@@ -19,7 +19,7 @@ Else, the [Chinese remainder theorem](https://brilliant.org/wiki/chinese-remaind
 Observe that the function `modular_inverse n m` returns the first Bezout's coefficient $k$ (from `bezout's_coefficients`, that uses the *Extended Euclidean algorithm*) such that $nk + ml = \gcd(n, m)$.
 
 Since $\gcd(\frac{N}{n_i}, n_i) = 1$ (since we require pairwise coprimes moduli),
-$$ \frac{N}{n_i}k + n_il \equiv 1 \pmod{n_i} $$
-$$ \frac{N}{n_i}k \equiv 1 \pmod{n_i} $$
+$$\frac{N}{n_i}k + n_{i}l \equiv 1 \pmod{n_i}$$
+$$\frac{N}{n_i}k \equiv 1 \pmod{n_i}$$
 
 $\implies$ $k$ is the modular multiplicative inverse of $\frac{N}{n_i}$ with respect to the modulus $n_i$.
