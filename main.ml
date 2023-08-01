@@ -85,15 +85,13 @@ let solve_system (system : modular_congruences_system) =
   else if remainders_zeros system then (lcm_of_system system, 0)
   else let _ = solvable system in aux (product_of_moduli system) 0 system
 
-open Printf
-
 let print_solutions = function
-  | g, s -> printf "General solution: %d | Smallest solution: %d.\n" g s
+  | g, s ->  
+    Printf.printf "General solution: %d | Smallest solution: %d.\n" g s
 
 let () =
   print_solutions (solve_system [ (3, 1); (5, 2); (7, 6) ]);
   print_solutions (solve_system [ (2, 0); (3, 1); (5, 4); (7, 0); (13, 9) ]);
   print_solutions (solve_system [ (12, 1); (17, 16); (29, 9) ]);
   print_solutions (solve_system [ (20, 0); (19, 0); (18, 0); (17, 0); (16, 0); 
-                                  (15, 0); (14, 0); (13, 0); (12, 0); (11, 0); ]);
-  ()
+                                  (15, 0); (14, 0); (13, 0); (12, 0); (11, 0); ])
