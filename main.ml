@@ -1,4 +1,4 @@
-type congruences_system = (int * int) list
+type modular_congruences_system = (int * int) list
 
 let remainders_smaller system =
   let rec aux = function
@@ -40,23 +40,27 @@ let solvable system =
     failwith "Moduli must be pairwise coprimes."
   else true
 
+(** Returns n1*n2*...*nk. *)
 let rec product_of_moduli = function
   | [] -> 1
   | (modulus, _) :: t -> modulus * product_of_moduli t
 
-let rec bezout's_coefficients x y =
-  let rec aux a b =
-    if a = 0 then (0, 1)
+(** Returns the Bezout's coefficients k and l such that gcd(x, y) = xk + yl. *)
+let rec bezout's_coefficients a b =
+  let rec aux x y =
+    if x = 0 then (0, 1)
     else
-      let k, l = aux (b mod a) a in
-      (l - (b / a * k), k)
+      let k, l = aux (y mod x) x in
+      (l - (y / x * k), k)
   in
-  aux x y
+  aux a b
 
+(** Returns the modular inverse of n with respect to modulus m. *)
 let modular_inverse n m =
   let k = fst (bezout's_coefficients n m) in
   if k < 0 then k + m else k
 
+(** Returns lcm(n1, n2, ..., nk). *)
 let lcm_of_system system =
   let lcm x y = x * (y / gcd x y) in
   let rec aux result = function
@@ -67,7 +71,8 @@ let lcm_of_system system =
   | (a, _) :: (b, _) :: t -> aux (lcm a b) t
   | _ -> failwith ""
 
-let solve_system (system : congruences_system) =
+(** Returns a pair of integers: (general solution, smallest solution). *)
+let solve_system (system : modular_congruences_system) =
   let rec aux product result = function
     | [] -> (result, result mod product)
     | (modulus, remainder) :: t ->
