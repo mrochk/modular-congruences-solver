@@ -10,15 +10,15 @@ and $n_1, n_2, \dots, n_k \in \mathbb{N_0}$ are either pairwise coprimes or all 
 
 In this program, a system of congruences is represented as an OCaml list of `(modulus, remainder)` pairs of integers.
 
-If $\forall r \in \lbrace  r_1, r_2, \dots, r_k \rbrace $, $r = 0$, we return $lcm ( n_1,n_2,\dots, n_{k-1}, n_k )$ as the general solution, and $0$ as the smallest.
+If $\forall r \in \lbrace  r_1, r_2, \dots, r_k \rbrace $, $r = 0$, we just return $lcm ( n_1,n_2,\dots, n_{k-1}, n_k )$ as the solution.
 
-Else, the [Chinese Remainder Theorem](https://brilliant.org/wiki/chinese-remainder-theorem/) states that this system has a solution $S$, and ($S$ modulo $N = n_1 n_2 \dots n_k$) is the unique solution $\in$ $[0, N-1]$.
+Else, the [Chinese Remainder Theorem](https://brilliant.org/wiki/chinese-remainder-theorem/) states that this system has a unique solution $S$ $\in$ $[0, N-1]$.
 
-***How do I compute the modular inverse ?***
+***How to compute the modular inverse ?***
 
-Observe that the function `modular_inverse n m` returns the first Bezout's coefficient $k$ (from `bezout's_coefficients`, that uses the [Extended Euclidean Algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)) such that $nk + ml = \gcd(n, m)$.
+Observe that the function `mod_inv n m` returns the first Bezout's coefficient $k$, using [Extended Euclidean Algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm) such that $nk + ml = \gcd(n, m)$.
 
-Since $\gcd(\frac{N}{n_i}, n_i) = 1$ (since we require pairwise coprimes moduli),
+Since $\gcd(\frac{N}{n_i}, n_i) = 1$ (pairwise coprimes moduli),
 $$\frac{N}{n_i}k + n_{i}l \equiv 1 \pmod{n_i}$$
 $$\frac{N}{n_i}k \equiv 1 \pmod{n_i}$$
 
