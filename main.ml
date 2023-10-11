@@ -30,9 +30,12 @@ let moduli_pairwise_coprimes system =
   aux' 0 system
 
 let solvable system =
-  if negatives system then failwith "Remainders and moduli must be non negatives."
-  else if not (remainders_smaller system) then failwith "Remainders must be smaller than moduli."
-  else if not (moduli_pairwise_coprimes system) then failwith "Moduli must be pairwise coprimes."
+  if negatives system then
+    failwith "Remainders and moduli must be non negatives."
+  else if not (remainders_smaller system) then
+    failwith "Remainders must be smaller than moduli."
+  else if not (moduli_pairwise_coprimes system) then
+    failwith "Moduli must be pairwise coprimes."
   else true
 
 (** [prod(n1, n2, ..., nk)] *)
@@ -42,11 +45,14 @@ let rec product_of_moduli = function
 
 (** [x in nx == 1 (mod m)] using the Extended Euclidean Algorithm. *)
 let mod_inv n m =
-  let rec aux a b t t' s s' =
-    if a mod b = 0 then if t' < 0 then t' + m else t' else
-    let q = a / b in
-    let t'', s'' = t - (t' * q) , s - (s' * q) in aux b (a mod b) t' t'' s' s''
-  in aux n m 1 0 0 1
+  let rec aux a b t t' =
+    if a mod b = 0 then if t' < 0 then t' + m else t'
+    else
+      let q = a / b in
+      let t'' = t - (t' * q) in
+      aux b (a mod b) t' t''
+  in
+  aux n m 1 0
 
 (** [lcm(n1, n2, ..., nk)] *)
 let lcm_of_system system =
@@ -71,8 +77,12 @@ let solve_system (system : modular_congruences_system) =
   in
   let prod = product_of_moduli system in
   if List.length system = 0 then failwith "Empty system."
-  else if remainders_zeros system then let s = lcm_of_system system in s, s mod prod
-  else let _ = solvable system in aux prod 0 system
+  else if remainders_zeros system then
+    let s = lcm_of_system system in
+    (s, s mod prod)
+  else
+    let _ = solvable system in
+    aux prod 0 system
 
 open Printf
 
@@ -82,4 +92,5 @@ let main () =
   print_solutions (solve_system [ (2, 0); (3, 1); (5, 4); (7, 0); (13, 9) ]);
   print_solutions (solve_system [ (12, 1); (17, 16); (29, 9) ]);
   print_solutions (solve_system [ (4, 0); (6, 0) ])
+
 let () = main ()
